@@ -1,0 +1,66 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.dfxingkongmall.app">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <!--检测联网方式，区分用户设备使用的是2G、3G或是WiFi-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!--获取用户设备的mac地址，在平板设备或电视盒子上，无法通过IMEI标示设备，我们会将mac地址作为用户的唯一标识-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--获取用户设备的IMEI，通过IMEI来唯一的标识用户-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <application
+      android:name="com.dfxingkongmall.app.MainApplication"
+      android:label="@string/app_name"
+      android:icon="@mipmap/ic_launcher"
+      android:allowBackup="false"
+      android:theme="@style/AppTheme">
+      <activity
+        android:name="com.dfxingkongmall.app.MainActivity"
+        android:label="@string/app_name"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+        android:windowSoftInputMode="adjustResize">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity>
+      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+
+        <!--友盟统计APPKEY-->
+        <meta-data android:name="UMENG_APPKEY" android:value="xxx" />
+        <!--统计用户下载渠道 设置一个默认的渠道名：service-->
+        <meta-data android:name="UMENG_CHANNEL" android:value="service"/>
+
+        <!--分享微信回调
+            必须添加theme，不添加theme会出现
+            Error:Execution failed for task ':app:processDevelopmentDebugManifest'.
+            > No record for key [activity#${applicationId}.wxapi.WXEntryActivity]
+        -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--分享QQ-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent1106740921" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name="com.share.ShareActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"  />
+    </application>
+
+</manifest>
